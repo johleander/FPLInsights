@@ -1,0 +1,163 @@
+
+.options {
+    flex: none;
+    background-color: #37003c;
+    border-bottom: 1px solid #eee;
+    padding: 0 8px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    box-shadow: 0px 4px 4px #dedede;
+    display: flex;
+    color: white;
+    justify-content: space-between;
+}
+
+.options h3 {
+    font-weight: 500;
+    
+}
+
+.changeGameweek {
+ display: flex;
+ align-items: center;
+}
+
+.changeGameweekButton {
+    background-color: #eee;
+    border: 1px solid #eee;
+    height: 30px;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    padding: 4px 8px;
+    width: 120px;
+    margin-right: 10px;
+   
+}
+
+.changeGameweekButton:not(:disabled):hover {
+    background-color: #dadada;
+    cursor: pointer;    
+    
+}
+
+.fixtures {
+    flex: 1;
+    display: grid;
+    grid-template-columns:  1.5fr repeat(10, 1fr);
+    gap: 4px;
+    margin-top: 60px;
+}
+
+.fixture {
+    display: flex;
+    background: red;
+    cursor: pointer;
+    font-size: 12px;
+}
+.fixture:hover {
+    box-shadow: 0 0 4px 2px rgba(13, 26, 107, 0.8);
+}
+
+.fixtureDifficulty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    background: rgba(0,0,0,0.05);
+}
+
+.fixtureOpponent {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    padding-left: 8px;
+}
+
+
+.teamLabel {
+    font-size: 14px;
+    color: #444;
+    padding: 0 6px;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    flex: 1;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.teamLabel:hover {
+    background-color: rgba(0,0,0,0.15);
+}
+
+.teamLabel img {
+    margin-right: 8px;
+}
+
+.teamLabel p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.gameweek {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #37003c;
+    margin-top: 12px;
+}
+
+.gameweekWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.gameweek p {
+    font-size: 12px;
+    margin: 0;
+
+}
+
+.gameweek .deadline {
+    font-size: 10px;
+    color: lightslategray;
+}
+
+.isCurrent {
+    background-color: rgb(25, 116, 201);
+    width: 8px; 
+    height: 8px;
+    border-radius: 4px;
+    margin-right: 4px;
+}
+
+.result {
+    border-bottom: 1px solid #eee;
+    font-size: 11px;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+.result:hover {
+    box-shadow: 0 0 4px 2px rgba(13, 26, 107, 0.8);
+}
+
+.resultOpponent {
+    flex: 1;
+    font-size: 11px;
+}
+.resultScore {
+    flex: 1;
+}
+.resultIndicator {
+    flex: 1;
+}

@@ -1,0 +1,27 @@
+Manchester City 
+Liverpool 
+Chelsea
+Manchester United 
+----
+Arsenal
+Leicester
+Tottenham
+Everton 
+-----
+Aston Villa
+West Ham 
+Leeds 
+Newcastle 
+-----
+Southampton
+Wolverhampton
+Brighton
+Burnley 
+-----
+Crystal Palace
+Watford
+Norwich
+Brentford
+
+
+
