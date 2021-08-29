@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -11,10 +11,17 @@
     background-color: rgba(255,255,255, 0.85 );
 }
 
+.date {
+    background: #aad3e6;
+    padding: 8px;
+    display: flex;
+    color: white;
+    justify-content: center;
+}
 .gameResult {
     box-shadow: 7px 7px 14px 0 rgba(0,0,0,0.8);
-    width: 60%;
-    height: 60%;
+    width: 420px;
+    height: 430px;
     background-color: #fff;
     border-radius: 8px;
 }
@@ -24,6 +31,7 @@
     height: 32px;
     background-color: #fafafa;
     border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
 }
 
 .tab {
@@ -37,7 +45,30 @@
     cursor: pointer;
 }
 
+.tab.active {
+    border-bottom: 1px solid rgb(65, 103, 218); 
+    color: black;
+}
+
 .tab:hover{
     background-color: rgba(0,0,0,0.1);
 
+}
+
+.logosAndResult {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+
+}
+
+.logosAndResult h1 {
+    margin: 16px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.logosAndResult h2 {
+    margin: 16px;
+    font-weight: 300;
 }

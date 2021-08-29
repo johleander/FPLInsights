@@ -16,7 +16,7 @@ interface IFixturesProps {
 
 export const Fixtures = (props: IFixturesProps) => {
     
-    const [fixtures, setFixtures] = useState<IFixture[]>([]);
+    const [ fixtures, setFixtures] = useState<IFixture[]>([]);
     const [startGameweek, setStartGameweek] = useState<number>(1);
     const [fixtureDetails, setFixtureDetails] = useState<IFixture>();
 
@@ -179,7 +179,7 @@ export const Fixtures = (props: IFixturesProps) => {
     const renderFixtureDetails = () => {
      
             if(fixtureDetails && fixtureDetails.isFinished) {
-                return <GameResult onClose={() => onResultClick(undefined)} />
+                return <GameResult fixture={fixtureDetails} onClose={() => onResultClick(undefined)}  />
             }
         
     }
@@ -188,6 +188,7 @@ export const Fixtures = (props: IFixturesProps) => {
           {renderTeams()}
           {renderGameweeks(startGameweek)}
           {renderFixtures(startGameweek)}
+          {renderFixtureDetails()}
         </>
       
     }
@@ -208,7 +209,6 @@ export const Fixtures = (props: IFixturesProps) => {
         <div className="fixtures">
             {render()}
         </div>
-        {fixtureDetails && renderFixtureDetails()}
-    </>
+          </>
     )
 }
