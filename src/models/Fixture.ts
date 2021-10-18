@@ -1,3 +1,5 @@
+import { ILineup } from "./Lineup";
+import { IStats } from "./Stats";
 import { ITeam } from "./Team";
 
 export interface IFixture {
@@ -8,11 +10,14 @@ export interface IFixture {
     isFinished: boolean;
     gameweek: number;
     referee: string;
+    apiFootballFixtureId: string
+
 }
 
 export interface IFixtureTeam {
     team?: ITeam;
     score?: number;
+    stats?: IStats;
     difficulty: number;
 }
 
@@ -26,6 +31,7 @@ export default class Fixture implements IFixture {
      isFinished: boolean;
      gameweek: number;
      referee: string;
+     apiFootballFixtureId: string;
 
 
     constructor (fixture: IFixture) {
@@ -36,6 +42,7 @@ export default class Fixture implements IFixture {
         this.gameweek = fixture.gameweek;
         this.isFinished = fixture.isFinished;
         this.kickoffTime = fixture.kickoffTime;
-        this.referee = fixture.referee
+        this.referee = fixture.referee;
+        this.apiFootballFixtureId = fixture.apiFootballFixtureId;
     }
 }

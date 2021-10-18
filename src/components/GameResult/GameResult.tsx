@@ -2,7 +2,11 @@
 import { MouseEvent, useState } from 'react';
 import "./GameResult.css";
 import cn from "classnames";
-import { IFixture } from '../models/Fixture';
+import Fixture, { IFixture } from '../../models/Fixture';
+import { GameResultTab } from '../../helper';
+import { GameResultStats } from './GameResultStats';
+import { IStats } from '../../models/Stats';
+import { GameResultLineup } from './GameResultLIneup';
 
 interface IGameResult { 
     onClose: () => void; 
@@ -19,12 +23,10 @@ export const GameResult = (props: IGameResult) => {
 
     const renderContent = () => {
         switch (currentTab) {
-            case 0: 
-                return <p>General</p>
-            case 1: 
-                return <p>Stats</p>
-            case 2: 
-                return <p>Lineups</p>
+            case GameResultTab.Stats: 
+                return <GameResultStats homeStats={props.fixture.homeTeam.stats as IStats} awayStats={props.fixture.awayTeam.stats as IStats}/>
+            case GameResultTab.Lineups: 
+                return <GameResultLineup  id={props.fixture.apiFootballFixtureId    }/>
             default: 
                 return <p>Unknown</p>
 
@@ -44,9 +46,8 @@ export const GameResult = (props: IGameResult) => {
                 <img src={props.fixture.awayTeam.team?.logo} alt="" width="60px" height="60px" /> 
             </div>
             <div className="tabs">
-                <div onClick={() => setCurrentTab(0)} className={cn({tab: true, active: currentTab === 0})}>General</div>
-                <div onClick={() => setCurrentTab(1)}  className={cn({tab: true, active: currentTab === 1})}>Stats</div>
-                <div onClick={() => setCurrentTab(2)}  className={cn({tab: true, active: currentTab === 2})}>Lineups</div>
+                <div onClick={() => setCurrentTab(GameResultTab.Stats)}  className={cn({tab: true, active: currentTab === GameResultTab.Stats})}>Stats</div>
+                <div onClick={() => setCurrentTab(GameResultTab.Lineups)}  className={cn({tab: true, active: currentTab === GameResultTab.Lineups})}>Lineups</div>
             </div>
             <div className="content">
                 {renderContent()}

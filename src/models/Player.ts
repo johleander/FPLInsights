@@ -29,7 +29,7 @@ export interface IPlayer {
     ict_index: string
     ict_index_rank: number;
     ict_index_rank_type: number;
-    id: 1
+    id: number;
     in_dreamteam: boolean;
     influence: string;
     influence_rank: number;
@@ -65,4 +65,13 @@ export interface IPlayer {
     value_form: string;
     value_season: string;
     web_name: string;
+}
+
+export class Player {
+
+    constructor() {
+
+    }
+
+    
 }

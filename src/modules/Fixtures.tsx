@@ -5,7 +5,9 @@ import { ITeam } from "../models/Team";
 import { IGameweek} from "../models/Gameweek";
 import "./Fixtures.css";
 import { IPlayer } from "../models/Player";
-import { GameResult } from "../components/GameResult";
+import { GameResult } from "../components/GameResult/GameResult";
+import Stats, { IPlayerStat, IStats } from "../models/Stats";
+import { teams_2122 } from "../helper";
 
 interface IFixturesProps {
     teams: ITeam[];
@@ -26,26 +28,57 @@ export const Fixtures = (props: IFixturesProps) => {
 
     useEffect(() => {
 
-        function mapFixtureData(data: any) {
-            const mappedFixtures = data.map( (f:any ) => {
-            let {team_h,team_h_difficulty, team_h_score, team_a,team_a_difficulty, team_a_score, event, finished, kickoff_time, referee, code } = f;
+        function mapStats(stats:any, away?: boolean) {
+            let mappedStat = new Stats();
+
+            stats.forEach((s:any) => {
+                const identifier: string = s.identifier; 
+                const valuesAndElements: Array<{value: number, element: number}> = away ? s.a: s.h;
+
+                const playersAndValues: IPlayerStat[] = valuesAndElements.map(ve => {
+                    const player = props.players.find(p => p.id === ve.element);
+                    const value = ve.value;
+                 
+                    return {player: player, value: value}
+                });
+
+       
+                mappedStat[identifier as keyof IStats] = playersAndValues;
+            });
+            
+            return mappedStat;
+        };
+
+        function mapFixtureData(fplFixtureData: any, fixtureData: any) {
+            const mappedFixtures = fplFixtureData.map( (f:any ) => {
+            let {team_h,team_h_difficulty, team_h_score, team_a,team_a_difficulty, team_a_score, event, finished, kickoff_time, referee, code, stats } = f;
           
-              const fixture = new Fixture({
+            const apiFootballTeamHomeId = teams_2122.find(t => t.fplId === team_h)?.id;
+            const apiFootballTeamAwayId = teams_2122.find(t => t.fplId === team_a)?.id;
+
+            const apiFootballFixture = fixtureData.response.find((f:any) => f.teams.home.id === apiFootballTeamHomeId && f.teams.away.id === apiFootballTeamAwayId );
+            const fixture = new Fixture({
                     homeTeam: {
                         team: props.teams.find(t => t.fplId === team_h),
                         difficulty: team_h_difficulty,
-                        score: team_h_score
+                        score: team_h_score,
+                        stats: mapStats(stats),
+                        
+
                     }, 
                     awayTeam: {
                         team: props.teams.find(t => t.fplId === team_a),
                         difficulty: team_a_difficulty,
-                        score: team_a_score
+                        score: team_a_score,
+                        stats: mapStats(stats, true)
+                     
                     },
                     gameweek: event, 
                     isFinished: finished,
                     kickoffTime: kickoff_time,
                     referee,
-                    id: code
+                    id: code,
+                    apiFootballFixtureId : apiFootballFixture.fixture.id 
               });
     
               return fixture; 
@@ -57,7 +90,8 @@ export const Fixtures = (props: IFixturesProps) => {
           }
         async function fetchData() {
             const fplfixtures = await axios.get("http://localhost:3001/api/football/fplfixtures");
-            mapFixtureData(fplfixtures.data); 
+            const fixtures = await axios.get("http://localhost:3001/api/football/fixtures");
+            mapFixtureData(fplfixtures.data, fixtures.data); 
         }
 
         fetchData();
@@ -82,7 +116,7 @@ export const Fixtures = (props: IFixturesProps) => {
         return gameweeks.map((g,i) => {
 
             return <div className="gameweek" style={{gridRow: 1, gridColumn: i+2}} key={i+Math.random()}>
-                 {g.isCurrent && <div className="isCurrent" title="In progress" />}
+                 {g.isCurrent && <div className="isCurrent" title="Current Gameweek" />}
                  <div className="gameweekWrapper">
                     <p>GW{startGameweek + i}</p>
                     <p className="deadline">{new Date(g.deadline).toLocaleDateString('default', options as any)}</p>
