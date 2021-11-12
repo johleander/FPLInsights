@@ -17,11 +17,14 @@ export const GameResultLineup = (props: IGameResultLineup) => {
       
         async function fetchData() {
             const lineups = await axios.get(`http://localhost:3001/api/football/lineups/?fixtureId=${props.id}`);
-            setLineup(lineups.data.response[0].formation);
+            setLineup(lineups.data.response);
+                 
         }
 
         fetchData();
     },[props.id]);
 
-    return <p>{lineup}</p>
+    console.log(lineup); 
+
+    return null;
 }

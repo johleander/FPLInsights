@@ -22,7 +22,6 @@ export const Fixtures = (props: IFixturesProps) => {
     const [startGameweek, setStartGameweek] = useState<number>(1);
     const [fixtureDetails, setFixtureDetails] = useState<IFixture>();
 
-
     const NUMBER_OF_GAMEWEEKS_TO_SHOW = 10;
 
 
@@ -99,6 +98,11 @@ export const Fixtures = (props: IFixturesProps) => {
     
 
   
+    const handleCurrentClick = () => {
+        const currentGW = props.gameweeks.findIndex(g => g.isCurrent) +1 ;
+        let newStartGW = currentGW
+        setStartGameweek(newStartGW);
+    }
 
     const handleNextClick = () => {
         let newStartGW =  startGameweek + 1;
@@ -136,8 +140,12 @@ export const Fixtures = (props: IFixturesProps) => {
         });
     }
 
+    const getForeground = (difficulty:number) => {
+        return difficulty > 3 ? "white" : "black"; 
+    }
+
     const getDifficultyColorFromNumber = (difficulty:number) => {
-        const colors = ["rgb(1, 252, 122)", "rgb(231, 231, 231)", "rgb(255, 23, 81)","rgb(128, 7, 45)"];
+        const colors = ["rgb(138, 242, 232)", "rgb(104, 186, 178)", "rgb(73, 125, 133)","rgb(45, 79, 84"];
 
         return colors[difficulty - 2];
     }
@@ -162,12 +170,12 @@ export const Fixtures = (props: IFixturesProps) => {
         
         if(!f.isFinished) {
             return <>
-            <div className="fixture" title={f.homeTeam.team?.name + " - "+  f.awayTeam.team?.name} style={{gridRow: homeTeamIndex + 2, gridColumn: column +2, backgroundColor: getDifficultyColorFromNumber(f.homeTeam.difficulty)}} key={f.id+"home"}>
+            <div className="fixture" title={f.homeTeam.team?.name + " - "+  f.awayTeam.team?.name} style={{gridRow: homeTeamIndex + 2, gridColumn: column +2, backgroundColor: getDifficultyColorFromNumber(f.homeTeam.difficulty), color: getForeground(f.homeTeam.difficulty)}} key={f.id+"home"}>
                    <div className="fixtureDifficulty">{f.homeTeam.difficulty}</div>
                    <div className="fixtureOpponent">{f.awayTeam.team?.shortName + " (H)"}</div>
            </div>
     
-           <div className="fixture" title={f.homeTeam.team?.name + " - "+  f.awayTeam.team?.name}  style={{gridRow: awayTeamIndex + 2, gridColumn: column + 2, backgroundColor: getDifficultyColorFromNumber(f.awayTeam.difficulty)}} key={f.id+"away"}>
+           <div className="fixture" title={f.homeTeam.team?.name + " - "+  f.awayTeam.team?.name}  style={{gridRow: awayTeamIndex + 2, gridColumn: column + 2, backgroundColor: getDifficultyColorFromNumber(f.awayTeam.difficulty), color: getForeground(f.awayTeam.difficulty)}} key={f.id+"away"}>
                    <div className="fixtureDifficulty">{f.awayTeam.difficulty}</div>
                    <div className="fixtureOpponent">{f.homeTeam.team?.shortName + " (A)"}</div>
            </div>
@@ -175,18 +183,23 @@ export const Fixtures = (props: IFixturesProps) => {
         }
         else {
             return <>
-            <div className="result" onClick={() => onResultClick(f)} title={f.homeTeam.team?.name + " - "+  f.awayTeam.team?.name + "  " + f.homeTeam.score + " - " + f.awayTeam.score } style={{gridRow: homeTeamIndex + 2, gridColumn: column +2}} key={f.id+"home"}>
-                    <div className="resultOpponent">{f.awayTeam.team?.name + " (H)"}</div>
-                   <div className="resultScore">{f.homeTeam.score + " - " + f.awayTeam.score}</div>
-                   <div className="resultIndicator" style={{backgroundColor: getColoredResult(f,false)}}></div>
+            <div className="fixture" onClick={() => onResultClick(f)} title={f.homeTeam.team?.name + " - "+  f.awayTeam.team?.name + "  " + f.homeTeam.score + " - " + f.awayTeam.score } style={{gridRow: homeTeamIndex + 2, gridColumn: column +2, backgroundColor: getColoredResult(f,false)}} key={f.id+"home"} >
+                    <div className="fixtureDifficulty">{f.homeTeam.difficulty}</div>
+                    <div className="resultWrapper">
+                        <div className="fixtureOpponent">{f.awayTeam.team?.shortName + " (H)"}</div>
+                        <div>{f.homeTeam.score + " - " + f.awayTeam.score}</div>
+                    </div>
+                   
+                   
              
            </div>
     
-           <div className="result" onClick={() => onResultClick(f)}  title={f.homeTeam.team?.name + " - "+  f.awayTeam.team?.name + "  " + f.homeTeam.score + " - " + f.awayTeam.score}  style={{gridRow: awayTeamIndex + 2, gridColumn: column + 2}} key={f.id+"away"}>
-                    <div className="resultOpponent">{f.homeTeam.team?.name + " (A)"}</div>
-                    <div className="resultScore">{f.homeTeam.score + " - " + f.awayTeam.score}</div>
-                    <div className="resultIndicator" style={{backgroundColor: getColoredResult(f,true)}}></div>
-            
+           <div className="fixture" onClick={() => onResultClick(f)}  title={f.homeTeam.team?.name + " - "+  f.awayTeam.team?.name + "  " + f.homeTeam.score + " - " + f.awayTeam.score}  style={{gridRow: awayTeamIndex + 2, gridColumn: column + 2,  backgroundColor: getColoredResult(f,true)}} key={f.id+"away"}>     
+             <div className="fixtureDifficulty">{f.awayTeam.difficulty}</div>
+                    <div className="resultWrapper">
+                        <div className="fixtureOpponent">{f.homeTeam.team?.shortName + " (A)"}</div>
+                        <div>{f.homeTeam.score + " - " + f.awayTeam.score}</div>
+                    </div>
            </div>
            </>
         }
@@ -232,9 +245,12 @@ export const Fixtures = (props: IFixturesProps) => {
         <div className="options">
             <h3>FPL Fixtures</h3>
             <div className="changeGameweek">
+            <button className="changeGameweekButton" onClick={handleCurrentClick}>
+                <p>Current GW</p>
+            </button> 
             <button className="changeGameweekButton" onClick={handlePreviousClick} disabled={startGameweek === 1}>
                 <p>Previous GW</p>
-                </button> 
+            </button> 
             <button className="changeGameweekButton" onClick={handleNextClick} disabled={startGameweek === 29}>
                 <p>Next GW  </p>
             </button>

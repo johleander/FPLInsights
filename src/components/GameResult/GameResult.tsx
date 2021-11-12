@@ -6,7 +6,7 @@ import Fixture, { IFixture } from '../../models/Fixture';
 import { GameResultTab } from '../../helper';
 import { GameResultStats } from './GameResultStats';
 import { IStats } from '../../models/Stats';
-import { GameResultLineup } from './GameResultLIneup';
+import { GameResultLineup } from './GameResultLineup';
 
 interface IGameResult { 
     onClose: () => void; 

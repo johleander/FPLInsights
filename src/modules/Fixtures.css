@@ -54,7 +54,6 @@
 
 .fixture {
     display: flex;
-    background: red;
     cursor: pointer;
     font-size: 12px;
 }
@@ -139,25 +138,11 @@
     margin-right: 4px;
 }
 
-.result {
-    border-bottom: 1px solid #eee;
-    font-size: 11px;
-    padding: 4px;
-    display: flex;
+.resultWrapper {
+    flex: 1;
+    display: flex; 
     flex-direction: column;
-    cursor: pointer;
-}
-.result:hover {
-    box-shadow: 0 0 4px 2px rgba(13, 26, 107, 0.8);
-}
+    align-items: center;
+    justify-content: center;
+} 
 
-.resultOpponent {
-    flex: 1;
-    font-size: 11px;
-}
-.resultScore {
-    flex: 1;
-}
-.resultIndicator {
-    flex: 1;
-}
