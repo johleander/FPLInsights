@@ -45,10 +45,10 @@ export const GameResult = (props: IGameResult) => {
                 <h2>{props.fixture.awayTeam.team?.shortName}</h2>
                 <img src={props.fixture.awayTeam.team?.logo} alt="" width="60px" height="60px" /> 
             </div>
-            <div className="tabs">
+            {/*<div className="tabs">
                 <div onClick={() => setCurrentTab(GameResultTab.Stats)}  className={cn({tab: true, active: currentTab === GameResultTab.Stats})}>Stats</div>
                 <div onClick={() => setCurrentTab(GameResultTab.Lineups)}  className={cn({tab: true, active: currentTab === GameResultTab.Lineups})}>Lineups</div>
-            </div>
+    </div>*/}
             <div className="content">
                 {renderContent()}
             </div>

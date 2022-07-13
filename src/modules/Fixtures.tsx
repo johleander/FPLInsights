@@ -7,7 +7,7 @@ import "./Fixtures.css";
 import { IPlayer } from "../models/Player";
 import { GameResult } from "../components/GameResult/GameResult";
 import Stats, { IPlayerStat, IStats } from "../models/Stats";
-import { teams_2122 } from "../helper";
+import { getEnvironmentURL, teams_2122 } from "../helper";
 
 interface IFixturesProps {
     teams: ITeam[];
@@ -88,8 +88,11 @@ export const Fixtures = (props: IFixturesProps) => {
             
           }
         async function fetchData() {
-            const fplfixtures = await axios.get("http://localhost:3001/api/football/fplfixtures");
-            const fixtures = await axios.get("http://localhost:3001/api/football/fixtures");
+            const fplFixturesURL = getEnvironmentURL("/api/football/fplfixtures");
+            const fplfixtures = await axios.get(fplFixturesURL);
+
+            const fixturesURL = getEnvironmentURL("/api/football/fixtures");
+            const fixtures = await axios.get(fixturesURL);
             mapFixtureData(fplfixtures.data, fixtures.data); 
         }
 
@@ -189,9 +192,6 @@ export const Fixtures = (props: IFixturesProps) => {
                         <div className="fixtureOpponent">{f.awayTeam.team?.shortName + " (H)"}</div>
                         <div>{f.homeTeam.score + " - " + f.awayTeam.score}</div>
                     </div>
-                   
-                   
-             
            </div>
     
            <div className="fixture" onClick={() => onResultClick(f)}  title={f.homeTeam.team?.name + " - "+  f.awayTeam.team?.name + "  " + f.homeTeam.score + " - " + f.awayTeam.score}  style={{gridRow: awayTeamIndex + 2, gridColumn: column + 2,  backgroundColor: getColoredResult(f,true)}} key={f.id+"away"}>     
@@ -213,6 +213,7 @@ export const Fixtures = (props: IFixturesProps) => {
             return [];
         }
 
+        
         return fixtures.filter(f => f.gameweek >= startGameweek && f.gameweek < endGameweek).map((f:Fixture,i) => {
 
             const homeTeamIndex = props.teams.findIndex(t => t.name === (f as Fixture).homeTeam.team?.name);
@@ -225,9 +226,9 @@ export const Fixtures = (props: IFixturesProps) => {
 
     const renderFixtureDetails = () => {
      
-            if(fixtureDetails && fixtureDetails.isFinished) {
-                return <GameResult fixture={fixtureDetails} onClose={() => onResultClick(undefined)}  />
-            }
+        if(fixtureDetails && fixtureDetails.isFinished) {
+            return <GameResult fixture={fixtureDetails} onClose={() => onResultClick(undefined)}  />
+        }
         
     }
     const render = () => {

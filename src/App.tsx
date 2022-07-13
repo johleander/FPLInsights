@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { teams_2122 } from './helper';
+import { getEnvironmentURL, teams_2122 } from './helper';
 
 import './App.css';
 import { Fixtures } from './modules/Fixtures';
@@ -21,8 +21,11 @@ function App() {
   useEffect(() => {
 
     async function fetchData() {
-      const fplGeneralData = await axios.get("http://localhost:3001/api/football/fplgeneral");
-      const teams = await axios.get("http://localhost:3001/api/football/teams");
+      const fplGeneralURL = getEnvironmentURL("/api/football/fplgeneral");
+      const fplGeneralData = await axios.get(fplGeneralURL);
+
+      const teamsURL = getEnvironmentURL("/api/football/teams")
+      const teams = await axios.get(teamsURL);
 
       mapData(fplGeneralData.data, teams.data);
     }

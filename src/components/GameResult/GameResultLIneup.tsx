@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { getEnvironmentURL } from "../../helper";
 import "./GameResult.css";
 
 
@@ -41,7 +42,8 @@ export const GameResultLineup = (props: IGameResultLineup) => {
 
       
         async function fetchData() {
-            const lineups = await axios.get(`http://localhost:3001/api/football/lineups/?fixtureId=${props.id}`);
+            const lineupsURL = getEnvironmentURL(`/api/football/lineups/?fixtureId=${props.id}`);
+            const lineups = await axios.get(lineupsURL);
             setLineups(lineups.data.response);
                  
         }

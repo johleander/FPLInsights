@@ -1,3 +1,9 @@
+
+export function getEnvironmentURL(path: string) : string  {
+   const baseURL =  process.env.NODE_ENV === "production" ? "https://johleander-api.azurewebsites.net" : "http://localhost:3001";
+    return baseURL + path; 
+}
+
 export const teams_2122 = [
     {
         name: "Arsenal", 
@@ -122,9 +128,6 @@ export const teams_2122 = [
         id: 39
     },
 ]
-
-
-
 export enum GameResultTab {
     Stats = 0, 
     Lineups = 1 
