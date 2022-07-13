@@ -1,12 +1,10 @@
 
 import { MouseEvent, useState } from 'react';
 import "./GameResult.css";
-import cn from "classnames";
-import Fixture, { IFixture } from '../../models/Fixture';
+import  { IFixture } from '../../models/Fixture';
 import { GameResultTab } from '../../helper';
 import { GameResultStats } from './GameResultStats';
 import { IStats } from '../../models/Stats';
-import { GameResultLineup } from './GameResultLineup';
 
 interface IGameResult { 
     onClose: () => void; 
@@ -26,7 +24,7 @@ export const GameResult = (props: IGameResult) => {
             case GameResultTab.Stats: 
                 return <GameResultStats homeStats={props.fixture.homeTeam.stats as IStats} awayStats={props.fixture.awayTeam.stats as IStats}/>
             case GameResultTab.Lineups: 
-                return <GameResultLineup  id={props.fixture.apiFootballFixtureId    }/>
+                return null;{/*<GameResultLineup  id={props.fixture.apiFootballFixtureId    }/>*/}
             default: 
                 return <p>Unknown</p>
 
