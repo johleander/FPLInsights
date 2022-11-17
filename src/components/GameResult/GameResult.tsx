@@ -37,11 +37,9 @@ export const GameResult = (props: IGameResult) => {
         <div className="gameResult" onClick={handleClick}>
             <div className="date">{ new Date(props.fixture.kickoffTime).toLocaleDateString('default', { month: 'short', day: 'numeric'})}</div>
             <div className="logosAndResult">
-                <img src={props.fixture.homeTeam.team?.logo} alt="" width="60px" height="60px" />  
                 <h2>{props.fixture.homeTeam.team?.shortName}</h2>
                 <h1>{props.fixture.homeTeam.score + "  -  " + props.fixture.awayTeam.score}</h1>
                 <h2>{props.fixture.awayTeam.team?.shortName}</h2>
-                <img src={props.fixture.awayTeam.team?.logo} alt="" width="60px" height="60px" /> 
             </div>
             {/*<div className="tabs">
                 <div onClick={() => setCurrentTab(GameResultTab.Stats)}  className={cn({tab: true, active: currentTab === GameResultTab.Stats})}>Stats</div>

@@ -24,28 +24,23 @@ function App() {
       const fplGeneralURL = getEnvironmentURL("/api/football/fplgeneral");
       const fplGeneralData = await axios.get(fplGeneralURL);
 
-      const teamsURL = getEnvironmentURL("/api/football/teams")
-      const teams = await axios.get(teamsURL);
-
-      mapData(fplGeneralData.data, teams.data);
+      mapData(fplGeneralData.data);
     }
 
     fetchData();
 },[]); 
 
-function mapData(fplData: any, teamsData: any) {
+function mapData(fplData: any) {
   const teamsArray = fplData.teams; 
   const players: IPlayer[] = fplData.elements as IPlayer[];
   const gws = fplData.events;
 
   const teams = teamsArray.map( (t:any ) => { 
-    let {id, name, short_name, strength, strength_attack_away, strength_attack_home, strength_defence_away, strength_defence_home, strength_overall_away, strength_overall_home} = t;
-    const mappedTeam = teams_2122.find(tt => tt.fplId === id);
-    const logo = teamsData.response.find((td: { team: { id: number; }; }) => td.team.id === mappedTeam?.id)?.team.logo;
-
+    let {id, code, name, short_name, strength, strength_attack_away, strength_attack_home, strength_defence_away, strength_defence_home, strength_overall_away, strength_overall_home} = t;
+  
     const mergedTeam = new Team({
       fplId: id,
-      id: mappedTeam?.id,
+      code,
       name, 
       shortName: short_name,
       strength: {
@@ -63,7 +58,6 @@ function mapData(fplData: any, teamsData: any) {
           away: strength_overall_away
         }
       },
-      logo
     });
 
     return mergedTeam;

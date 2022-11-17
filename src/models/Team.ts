@@ -16,7 +16,7 @@ interface IStrength {
 }
 
 export interface ITeam {    
-    id: number | undefined,
+    code: number | undefined,
     fplId: number;
     name: string;
     shortName: string; 
@@ -28,7 +28,7 @@ export interface ITeam {
 
 export default class Team implements ITeam {
 
-    id: number | undefined;
+    code: number | undefined;
     fplId: number;
     name: string; 
     shortName: string;
@@ -36,10 +36,10 @@ export default class Team implements ITeam {
     logo?: string;
 
     constructor (team: ITeam) {
-        const {fplId, id, name, shortName, strength, logo} = {...team};
+        const {fplId, code, name, shortName, strength, logo} = {...team};
 
-       this.id = id;
        this.fplId = fplId;
+       this.code = code;
        this.name = name;
        this.shortName = shortName;
        this.strength = strength;

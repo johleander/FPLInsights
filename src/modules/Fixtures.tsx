@@ -77,7 +77,7 @@ export const Fixtures = (props: IFixturesProps) => {
                     kickoffTime: kickoff_time,
                     referee,
                     id: code,
-                    apiFootballFixtureId : apiFootballFixture.fixture.id 
+                    apiFootballFixtureId : apiFootballFixture?.fixture.id 
               });
     
               return fixture; 
@@ -137,7 +137,6 @@ export const Fixtures = (props: IFixturesProps) => {
         return props.teams.map((t,i) => {
 
             return <div className="teamLabel" style={{gridRow: i+2}} key={t.fplId + t.name} title={t.name}>
-                <img src={t.logo} alt="" width="30px" height="30px" />
                 <p>{t.name}</p>
             </div>
         });
