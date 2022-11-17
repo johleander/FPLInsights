@@ -243,7 +243,7 @@ export const Fixtures = (props: IFixturesProps) => {
     return (
     <>
         <div className="options">
-            <h3>FPL Fixtures</h3>
+            <h3>FPLInsights</h3>
             <div className="changeGameweek">
             <button className="changeGameweekButton" onClick={handleCurrentClick}>
                 <p>Current GW</p>
